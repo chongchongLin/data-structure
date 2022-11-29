@@ -1,51 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    
+
 </body>
 <script>
-     function Node(data,left,right){
+    function Node(data, left, right) {
         this.data = data;
         this.left = left;
         this.right = right;
         this.show = show;
-     }
-     function show(){
+    }
+
+    function show() {
         return this.data;
-     }
-     //二叉查找树
-     //相对较小的值保存在左结点，较大的值保存在右结点
-     function BST(){
+    }
+    //二叉查找树
+    //相对较小的值保存在左结点，较大的值保存在右结点
+    function BST() {
         this.root = null; //根结点
         this.insert = insert; //插入结点方法
-        // this.inOrder = inOrder || ;
-     }
-
-     function insert(data){
-        var n = new Node(data,null,null); //创建结点
+        this.inOrder = inOrder;
+        this.preOrder = preOrder;
+        this.postOrder = postOrder;
+        this.deep = deep;
+        this.find = find;
+        this.level = level;
+    }
+    //插入结点
+    function insert(data) {
+        var n = new Node(data, null, null); //创建结点
         //是否存在根结点
-        if(this.root == null){
+        if (this.root == null) {
             this.root = n;
-        }else{
+        } else {
             var current = this.root;
             var parent;
-            while(true){
-                parent = current;//设根结点为当前结点
-                if(data<=current.data){ //待插入节点保存数据 小于当前节点，那么设当前节点为左节点
+            while (true) {
+                parent = current; //设根结点为当前结点
+                if (data <= current.data) { //待插入节点保存数据 小于当前节点，那么设当前节点为左节点
                     current = current.left;
-                    if(current == null){ //左节点为空，就将新插入的节点插入
+                    if (current == null) { //左节点为空，就将新插入的节点插入
                         parent.left = n;
                         break;
                     }
-                }else{
+                } else {
                     current = current.right;
-                    if(current == null){
+                    if (current == null) {
                         parent.right = n;
                         break;
                     }
@@ -54,12 +62,80 @@
             }
         }
 
-     }
-     var nums = new BST();
-     nums.insert(23);
-     nums.insert(45);
-     nums.insert(16);
-     nums.insert(37);
-     console.log(nums.root)
+    }
+    var nums = new BST();
+    nums.insert(23);
+    nums.insert(45);
+    nums.insert(16);
+    nums.insert(37);
+    nums.insert(3);
+    nums.insert(99);
+    nums.insert(22);
+    nums.insert(10);
+    nums.insert(8);
+    //中序遍历 左->根->右
+    function inOrder(node) {
+        if (node != null) {
+            inOrder(node.left);
+            console.log(node.show())
+            inOrder(node.right);
+        }
+    }
+    //前序遍历 根->左->右
+    function preOrder(node) {
+        if (node != null) {
+            console.log(node.show())
+            preOrder(node.left);
+            preOrder(node.right);
+        }
+    }
+    //后序遍历
+    function postOrder(node) {
+        if (node != null) {
+            preOrder(node.left);
+            preOrder(node.right);
+            console.log(node.show())
+        }
+    }
+    //求深度
+    function deep(node) {
+        if (node == null) {
+            return 0
+        }
+        let left = deep(node.left);
+        let right = deep(node.right);
+        return Math.max(left, right) + 1
+    }
+    //求值
+    function find(node, val) {
+        if (node != null) {
+            if (node.show() == val) {
+                res =  node;
+            } else {
+                find(node.left, val)
+                find(node.right, val)
+            }
+        }
+    }
+    
+    //求结点层次
+    let h = 0;
+    function level(node,res,height){
+        if(node ==null){
+           h = 0;
+        }else if(node == res){
+            h = height;
+        }else{
+            level(node.left,res,height+1)
+            if(h==0){
+                level(node.right,res,height+1)
+            }
+        }
+        return h;
+    }
+    let res = null;
+    find(nums.root, 10);
+    console.log(level(nums.root,res,1))
 </script>
+
 </html>
