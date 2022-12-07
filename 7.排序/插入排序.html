@@ -13,7 +13,30 @@
 <script>
     let list = [2, 1, 4, 6, 3];
 
-    for(let i=0;)
+    for (let i = 1; i < list.length; i++) {
+        let item = list[i];
+        let j = i - 1;
+        while (item < list[j]) {
+            list[j + 1] = list[j] //后移一格
+            j--;
+        }
+        list[j + 1] = item; //插入
+
+    }
+
+    for (let i = 0; i < list.length; i++) {
+        let index = i;
+        let item = list[i];
+        for (let j = i - 1; j >= 0; j--) {
+            if (item < list[j]) {
+                list[j + 1] = list[j]
+                index = j;
+            }
+        }
+        list[index] = item;
+    }
+
+    console.log(list)
 </script>
 
 </html>
