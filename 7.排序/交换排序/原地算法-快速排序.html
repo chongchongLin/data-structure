@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    let list = [2, 3, 10, 1, 0, 17, 13];
+
+    function getIndex(list = [], start, end) {
+        let point = list[end];
+        let j = start;
+        for (let i = start; i <= end; i++) {
+            if (list[i] <= point) {
+                swap(list, i, j++)
+            }
+        }
+        return j - 1;
+    }
+
+    function swap(arr, i, j) {
+        [arr[i], arr[j]] = [arr[j], arr[i]]
+    }
+    function quickSort(list=[],start,end){
+        if(end-start<2){
+            return list;
+        }
+        let index = getIndex(list, start, end);
+        let left = quickSort(list,start,index-1);
+        let right = quickSort(list,index+1,end);
+        return list
+    }
+
+    console.log(quickSort(list,0,6))
+</script>
+
+</html>
