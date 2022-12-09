@@ -12,8 +12,8 @@
 
 </body>
 <script>
-    let list = [2, 3, 10, 1, 0, 17, 13];
-
+    // let list = [2, 3, 10, 1, 0, 17, 13];
+let list = [1, 10, 2, 4, 4, 0, 15, 5, 7, 3];
     function getIndex(list = [], start, end) {
         let point = list[end];
         let j = start;
@@ -29,7 +29,7 @@
         [arr[i], arr[j]] = [arr[j], arr[i]]
     }
     function quickSort(list=[],start,end){
-        if(end-start<2){
+        if(end-start<1){
             return list;
         }
         let index = getIndex(list, start, end);
@@ -38,7 +38,7 @@
         return list
     }
 
-    console.log(quickSort(list,0,6))
+    console.log(quickSort(list,0,list.length-1))
 </script>
 
 </html>
