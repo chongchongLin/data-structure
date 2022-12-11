@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let array = [3, 8, 6, 1, 5, 7, 9, 2, 4]
+
+    let min = Math.min(...array);
+    let max = Math.max(...array);
+    let count = 3;
+    let size = Math.floor((max-min)/count)+1;
+    let buckets = new Array(size).fill(0).map((item)=> new Array);
+    //关键
+    for(let i=0;i<array.length;i++){
+        let index = Math.floor((array[i]-min)/size);
+        buckets[index].push(array[i]);
+    }
+    let res = [];
+    buckets.forEach((item)=>{
+        res.push(...insertSort(item))
+    })
+    console.log('桶排序',res)
+    function insertSort(list=[]){
+        for(let i=0;i<list.length;i++){
+            let item = list[i];
+            let j = i-1;
+            while(list[j]>item){
+                list[j+1] = list[j];
+                j--;
+            }
+            list[j+1] = item;
+        }
+        return list;
+    }
+
+</script>
+</html>
