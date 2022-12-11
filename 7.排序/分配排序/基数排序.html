@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    let array = [666, 520, 36, 49, 9, 600, 8, 502, 998, 32]
+    //获取字符串最大长度
+    function getMaxNumLen(list = []) {
+        let max = `${list[0]}`.length;
+        for (let i = 0; i < list.length; i++) {
+            if (max < `${list[i]}`.length) {
+                max = `${list[i]}`.length
+            }
+        }
+        return max
+    }
+
+    function sort(list, index, max) {
+        let buckets = new Array(10).fill(0).map((item) => new Array())
+        for (let i = 0; i < list.length; i++) {
+            let pad = String(list[i]).padStart(max, '0')
+            let num = pad[max - 1 - index];
+            buckets[num].push(list[i]) //按位数进行划分间隔
+        }
+        let result = []
+        for (let bucket of buckets) {
+            result.push(...bucket)
+        }
+        return result
+    }
+    let max = getMaxNumLen(array);
+    for (let i = 0; i < max; i++) {
+        array = sort(array, i, max);
+    }
+</script>
+
+</html>
