@@ -1,56 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    
+
 </body>
 <script>
-    function Node(data,left,right){
+    function Node(data, left, right) {
         this.data = data;
         this.left = left;
         this.right = right;
         this.show = show;
+
     }
-    function show(){
+
+    function show() {
         return this.data;
     }
-    function BST(){
+
+    function BST() {
         this.root = null;
         this.insert = insert;
+        this.find = find;
+        this.deleteNode = deleteNode;
+        this.getMin = getMin;
     }
-    function insert(data){
-        let node = new Node(data,null,null);
-        if(this.root == null){
+
+    function insert(data) {
+        let node = new Node(data, null, null);
+        if (this.root == null) {
             this.root = node
-        }else{
-            var parent;
+        } else {
             let current = this.root;
-            while(true){
+            var parent;
+            while (true) {
                 parent = current;
-                if(current.data>=data){
-                    current  = current.right
-                    if(current == null){
-                        parent.right = node;
+                if (data<current.data) {
+                    current = current.left
+                    if (current == null) {
+                        parent.left = node;
                         break;
                     }
-                }else{
-                    current = current.left;
-                    if(current == null){
-                        parent.left = node;
+                } else {
+                    current = current.right;
+                    if (current == null) {
+                        parent.right = node;
                         break;
                     }
                 }
             }
         }
     }
+
+    function find(data) {
+        let current = this.root;
+        while (current != null) {
+            if (current.data == data) {
+                return current
+            } else if (current.data > data) {
+                current = current.left
+            } else {
+                current = current.right
+            }
+        }
+        return null;
+    }
+
+    function getMin(node) {
+        let current = node;
+        while (!(current.left == null)) {
+            current = current.left
+        }
+        return current.data;
+    }
+
+    function removeNode(node, data) {
+        if (node == null) {
+            return null
+        }
+        if (data == node.data) {
+            //没有左右节点直接删除当前节点
+            if (node.left == null && node.right == null) {
+                return null;
+            }
+            //只有一个节点 并且左节点为空直接返回右结点
+            if (node.left == null) {
+                return node.right;
+            }
+            if (node.right == null) {
+                return node.left;
+            }
+            //如果含有两个结点，无非是查左子树的最大值和右子树的最小值
+            var tempNode = getMin(node.right); //右子树的最小值
+            node.data = tempNode.data;
+            node.right = removeNode(node.right, tempNode.data);
+            return node;
+        } else if (data < node.data) {
+            node.left = removeNode(node.left, data);
+            return node;
+        } else {
+            node.right = removeNode(node.right, data);
+            return node;
+        }
+    }
+
+    function deleteNode(data) {
+        root = removeNode(this.root, data);
+    }
     var nums = new BST();
-    nums.insert(5);
-    nums.insert(4);
-    console.log(nums.root)
+    nums.insert(23);
+    nums.insert(45);
+    nums.insert(16);
+    nums.insert(37);
+    nums.insert(3);
+    nums.insert(99);
+    nums.insert(22);
+    console.log(nums)
+    nums.deleteNode(16)
 </script>
+
 </html>
